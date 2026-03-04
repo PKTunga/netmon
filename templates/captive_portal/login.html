@@ -1,0 +1,14 @@
+{% extends 'captive_portal/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center mb-4">WiFi Login</h3>
+                {% include 'captive_portal/partials/login_form.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

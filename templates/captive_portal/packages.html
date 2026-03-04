@@ -1,0 +1,25 @@
+{% extends 'captive_portal/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Select a Package</h2>
+    <span class="text-muted">User: {{ request.user.username }}</span>
+</div>
+<div class="row">
+    {% for package in packages %}
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ package.name }}</h5>
+                <p class="card-text">{{ package.description }}</p>
+                <h3 class="text-primary my-3">{{ package.price }} KES</h3>
+                <button class="btn btn-success w-100" hx-post="{% url 'initiate_payment' package.id %}" hx-swap="outerHTML" hx-indicator="#spinner-{{ package.id }}">
+                    Pay with M-Pesa
+                    <span id="spinner-{{ package.id }}" class="htmx-indicator spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
