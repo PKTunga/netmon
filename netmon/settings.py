@@ -34,6 +34,7 @@ EXTENDED_RADIUS_USER_MODELS = True
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,30 +43,37 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
+
     'openwisp_utils',
     'openwisp_users',
+    'openwisp_controller',
     'openwisp_radius',
-    'django_daraja', # M-Pesa
+
+    'django_daraja',
     'django_htmx',
+
+    'apps.users',
     'apps.captive_portal',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'netmon.urls'
@@ -100,20 +108,38 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'openwisp_users.User'
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-    # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-# allauth settings for openwisp-users
-ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
+# URL to redirect for login, eg: @login_required decorator
+LOGIN_URL = 'captive_login'
 
+
+
+# Allauth settings
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'phone_number'
+ACCOUNT_LOGIN_METHODS = {'username'}  # Tells allauth to use the USERNAME_FIELD
+ACCOUNT_SIGNUP_FIELDS = {
+    'phone_number': {'required': True},
+    'username': {'required': False},
+    'email': {'required': False},
+}
+ACCOUNT_EMAIL_VERIFICATION = 'none' # Optional: simplifies development
+
+# --- M-Pesa C2B Settings ---
+MPESA_PAYBILL_NUMBER = '300300'  # Replace with your actual Paybill or Till Number
+MPESA_ACCOUNT_PREFIX = 'WIFI'  # Optional prefix for account numbers
+
+
+# --- OpenWISP Specific ---
+# Ensure OpenWISP knows about your custom user model
+OPENWISP_USERS_AUTH_MODEL = 'users.CustomUser'
+OPENWISP_USERS_ORGANIZATION_MODEL = "openwisp_users.Organization"
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

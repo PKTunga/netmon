@@ -17,9 +17,9 @@ class PaymentTransaction(models.Model):
     package = models.ForeignKey(WiFiPackage, on_delete=models.SET_NULL, null=True)
     phone_number = models.CharField(max_length=15)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    checkout_request_id = models.CharField(max_length=100, unique=True)
+    account_reference = models.CharField(max_length=100, unique=True, help_text="The unique account number for this transaction.")
     mpesa_receipt_number = models.CharField(max_length=20, blank=True, null=True)
-    status = models.CharField(max_length=20, default='PENDING')
+    status = models.CharField(max_length=20, default='INITIATED', help_text="Transaction status (e.g., INITIATED, PENDING, COMPLETED, FAILED)")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

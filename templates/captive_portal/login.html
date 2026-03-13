@@ -1,14 +1,18 @@
 {% extends 'captive_portal/base.html' %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h3 class="text-center mb-4">WiFi Login</h3>
-                {% include 'captive_portal/partials/login_form.html' %}
-            </div>
-        </div>
+<div class="w-full max-w-md">
+    <div class="text-center mb-8">
+        <h1 class="text-4xl font-extrabold text-white">
+            Sasa<span class="text-orange-500">Konnect</span> 🚀
+        </h1>
+        <p class="text-slate-400 mt-2">Fast & Reliable WiFi Anywhere</p>
     </div>
+
+    <div class="bg-white rounded-3xl shadow-2xl p-8 border border-white/10">
+        {% include 'captive_portal/partials/login_form.html' %}
+    </div>
+    
+    <p class="text-center text-slate-500 text-xs mt-8">© 2026 SasaKonnect. Stay Connected! 📶</p>
 </div>
 {% endblock %}

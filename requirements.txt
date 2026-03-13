@@ -1,0 +1,5 @@
+openwisp-controller==1.2.0 
+openwisp-users==1.2.0 
+openwisp-radius==1.1.0 
+openwisp-utils==1.2.0
+Django==5.2.11
